@@ -8,8 +8,8 @@ global SERIAL
 def display_cli_menu():
     f = open("adb_commands.json")
     command_map = json.load(f)
-    stop_it = False
-    while not stop_it:
+    continue_run = True
+    while continue_run:
         questions = [
             {
                 'type': 'list',
@@ -22,20 +22,20 @@ def display_cli_menu():
         command_to_exec = command_map[answers["command"]]
         SERIAL = device_serial()
         launch_adb(command_to_exec, SERIAL)
-        stop_it = ask_user()
+        continue_run = ask_user()
 
 
 def ask_user():
     questions = [
         {
             'type': 'confirm',
-            'name': 'stopIt',
+            'name': 'continue_run',
             'message': 'Continue?',
             'default': True,
         }
     ]
     answers = prompt(questions)
-    return not answers["stopIt"]
+    return answers["continue_run"]
 
 
 def device_serial():
