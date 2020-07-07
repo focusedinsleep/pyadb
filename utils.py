@@ -16,4 +16,4 @@ def launch_adb(command, device):
     command = str(command).format(SERIAL=device, PATH_TO_APK=PATH_TO_APK, APK=APK,
                                   TIMEZONE=TIMEZONE, PACKAGE=PACKAGE)
     print("Running: " + command)
-    print(os.popen(command).read())
+    os.system(command)
