@@ -1,7 +1,13 @@
 from PyInquirer import prompt
+from utils import *
+import json
 
-# using PyInquirer, a choice menu
-def display_cli_menu(command_map):
+global SERIAL
+
+
+def display_cli_menu():
+    f = open("adb_commands.json")
+    command_map = json.load(f)
     stop_it = False
     while not stop_it:
         questions = [
@@ -9,20 +15,42 @@ def display_cli_menu(command_map):
                 'type': 'list',
                 'name': 'command',
                 'message': 'Adb Command',
-                'choices': command_map,
+                'choices': command_map.keys(),
             }
         ]
         answers = prompt(questions)
-        print(answers["command"])
-        launch_adb(answers["command"])
-        questions = [
-            {
-                'type': 'confirm',
-                'name': 'stopIt',
-                'message': 'Terminate Program?',
-                'default': False,
-            }
-        ]
-        answers = prompt(questions)
-        if answers["stopIt"] is True:
-            stop_it = True
+        command_to_exec = command_map[answers["command"]]
+        SERIAL = device_serial()
+        launch_adb(command_to_exec, SERIAL)
+        stop_it = ask_user()
+
+
+def ask_user():
+    questions = [
+        {
+            'type': 'confirm',
+            'name': 'stopIt',
+            'message': 'Terminate Program?',
+            'default': False,
+        }
+    ]
+    answers = prompt(questions)
+    return answers["stopIt"]
+
+
+def device_serial():
+    devices = list_devices()
+    questions = [
+        {
+            'type': 'list',
+            'name': 'serial',
+            'message': 'Which device?',
+            'choices': devices
+        }
+    ]
+    answers = prompt(questions)
+    return answers["serial"]
+
+
+if __name__ == '__main__':
+    display_cli_menu()

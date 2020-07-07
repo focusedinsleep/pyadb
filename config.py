@@ -1,0 +1,4 @@
+PATH_TO_APK=""
+TIMEZONE=""
+PACKAGE=""
+APK=""
