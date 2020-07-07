@@ -4,7 +4,11 @@ from config import *
 
 def list_devices():
     adb_devs = os.popen("adb devices").read()
-    devices = re.findall("[0-9A-Z]{6,20}", adb_devs)
+    serials = re.findall("[0-9A-Z]{6,20}", adb_devs)
+    devices = []
+    for sl in serials:
+        model_ = os.popen(f'adb -s {sl} shell getprop ro.product.model').read().strip()
+        devices.append(sl + " " + model_)
     return devices
 
 

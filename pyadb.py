@@ -30,12 +30,12 @@ def ask_user():
         {
             'type': 'confirm',
             'name': 'stopIt',
-            'message': 'Terminate Program?',
-            'default': False,
+            'message': 'Continue?',
+            'default': True,
         }
     ]
     answers = prompt(questions)
-    return answers["stopIt"]
+    return not answers["stopIt"]
 
 
 def device_serial():
@@ -43,13 +43,13 @@ def device_serial():
     questions = [
         {
             'type': 'list',
-            'name': 'serial',
+            'name': 'selected_dev',
             'message': 'Which device?',
             'choices': devices
         }
     ]
     answers = prompt(questions)
-    return answers["serial"]
+    return answers["selected_dev"].split(" ")[0]
 
 
 if __name__ == '__main__':
