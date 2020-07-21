@@ -1,14 +1,22 @@
 ## pyadb
 Tool for easy navigation using adb command line tool
 
-### setup
+### setup 
+#### mac/linux
 ```
 cd pyadb/
-python3 -m venv env
+python -m venv env
 source env/bin/activate
-pip3 install -r r.txt
+pip install -r r.txt
 ```
-
+#### windows
+```
+cd pyadb/
+python -m venv env
+cd env/Scripts
+activate
+pip install -r r.txt
+```
 ### run
 ![](pyadb.gif)
 
