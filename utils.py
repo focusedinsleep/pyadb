@@ -12,9 +12,18 @@ ADB_COMMAND = 'adb'
 # 2. setup os specific commands
 def list_devices():
     global ADB_COMMAND
-    if platform.system() == 'Windows':
+    platform_system = platform.system()
+    if platform_system == 'Windows':
         pwd = os.popen("cd").read().strip()
         ADB_COMMAND = WINDOWS_ADB.format(CURRENT_DIR=pwd) + 'adb.exe'
+    elif platform_system == 'Darwin':
+        os.popen('chmod 700 ' + MACOS_ADB + 'adb')
+        ADB_COMMAND = MACOS_ADB + 'adb'
+    elif platform_system == 'Linux':
+        os.popen('chmod 700 ' + LINUX_ADB + 'adb')
+        ADB_COMMAND = LINUX_ADB + 'adb'
+    else:
+        exit() 
     adb_devs = os.popen(ADB_COMMAND + " devices").read()
     serials = re.findall("[0-9A-Z]{6,20}", adb_devs)
     devices = []
