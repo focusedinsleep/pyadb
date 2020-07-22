@@ -4,7 +4,7 @@ import re
 
 from config import *
 
-ADB_COMMAND = ''
+ADB_COMMAND = 'adb'
 
 
 # TODO:
